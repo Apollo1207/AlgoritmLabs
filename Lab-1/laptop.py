@@ -52,7 +52,6 @@ def insertion_sort(laptops_for_insertion_sort):
             laptops_for_insertion_sort[laptop_to_sort + 1].ram_amount = laptops_for_insertion_sort[
                 laptop_to_sort].ram_amount
             laptop_to_sort -= 1
-        Laptop.exchange_operations_amount_for_inserstion_sort += 1
         laptops_for_insertion_sort[laptop_to_sort + 1].ram_amount = ram_amount_item
 
     end_time = datetime.datetime.now()
@@ -63,43 +62,41 @@ def insertion_sort(laptops_for_insertion_sort):
     return laptops_for_insertion_sort
 
 
-def heap_sort(laptops_for_heap_sort):
-    def heap_tree_forming(laptops_for_sort, max, i):
-        big_index = i
-        child_l = 2 * i + 1
+def heap_sort(laptop_objects):
+    def binary_tree(laptops_for_sort, max, index):
+        big_index = index
+        child_l = 2 * index + 1
         child_r = child_l + 1
 
         Laptop.comparison_operations_amount_for_heapsort += 1
-        if child_l < max and laptops_for_sort[child_l].cpu_speed > laptops_for_sort[i].cpu_speed:
-            Laptop.exchange_operations_amount_for_heapsort += 1
+        if child_l < max and laptops_for_sort[child_l].cpu_speed > laptops_for_sort[index].cpu_speed:
             big_index = child_l
 
         Laptop.comparison_operations_amount_for_heapsort += 1
         if child_r < max and laptops_for_sort[child_r].cpu_speed > laptops_for_sort[big_index].cpu_speed:
-            Laptop.exchange_operations_amount_for_heapsort += 1
             big_index = child_r
 
         Laptop.comparison_operations_amount_for_heapsort += 1
-        if big_index != i:
+        if big_index != index:
             Laptop.exchange_operations_amount_for_heapsort += 1
-            laptops_for_sort[i], laptops_for_sort[big_index] = laptops_for_sort[big_index], laptops_for_sort[i]
+            laptops_for_sort[index], laptops_for_sort[big_index] = laptops_for_sort[big_index], laptops_for_sort[index]
 
-            heap_tree_forming(laptops_for_sort, max, big_index)
+            binary_tree(laptops_for_sort, max, big_index)
 
     start_time = datetime.datetime.now()
-    list_length = len(laptops_for_heap_sort)
+    list_length = len(laptop_objects)
 
-    for index in range(list_length // 2 - 1, -1, -1):
+    for j in range(list_length // 2 - 1, -1, -1):
         Laptop.comparison_operations_amount_for_heapsort += 1
-        heap_tree_forming(laptops_for_heap_sort, list_length, index)
 
-    for index in range(list_length - 1, 0, -1):
+        binary_tree(laptop_objects, list_length, j)
+
+    for k in range(list_length - 1, 0, -1):
         Laptop.exchange_operations_amount_for_heapsort += 1
-        laptops_for_heap_sort[index].cpu_speed, laptops_for_heap_sort[0].cpu_speed = laptops_for_heap_sort[
-                                                                                         0].cpu_speed, \
-                                                                                     laptops_for_heap_sort[
-                                                                                         index].cpu_speed
-        heap_tree_forming(laptops_for_heap_sort, index, 0)
+        laptop_objects[k].cpu_speed, laptop_objects[0].cpu_speed = laptop_objects[0].cpu_speed, laptop_objects[
+            k].cpu_speed
+
+        binary_tree(laptop_objects, k, 0)
 
     end_time = datetime.datetime.now()
     time_diff = end_time - start_time
@@ -107,7 +104,7 @@ def heap_sort(laptops_for_heap_sort):
     algo_information_print("Heapsort", time_diff, Laptop.comparison_operations_amount_for_heapsort,
                            Laptop.exchange_operations_amount_for_heapsort)
 
-    return laptops_for_heap_sort
+    return laptop_objects
 
 
 input_data = entry_data_from_csv("laptops.csv")
