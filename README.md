@@ -1,4 +1,14 @@
-git clone https://github.com/Apollo1207/AlgoritmLabs >
-cd AlgoritmLabs/Lab-1 >
-python3 laptop.py
+# Task:
+ 
+ Створити клас “Ноутбук” rотрий містить поля:
+- швидкодія процесору (CPU, в гігагерцах)
+- об'єм оперативної пам'яті
+- назва фірми-виробника	Реалізувати Insertion алгоритм для сортування ноутбуків по спаданню  за об'ємом оперативної пам'яті  і  Heapsort для сортування по швидкодії процесора за зростанням 
+ 
+  
+   # How to run:
 
+
+   - git clone https://github.com/Apollo1207/AlgoritmLabs 
+   - cd AlgoritmLabs/Lab-1 
+   - python3 laptop.py 
